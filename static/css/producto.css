@@ -1,0 +1,38 @@
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+}
+
+body{
+background-image:url('/img/fondoUpdate.jpeg');
+background-size:cover;
+background-attachment:fixed;
+}
+.table{
+margin:50px auto;
+width:80%;
+background:rgb(0,0,0,.7);
+}
+table{
+ color:white;
+ width:100%;
+}
+h1{
+	color:white;
+	text-align:center;
+	margin-top:50px;
+}
+td{
+	text-align:center;
+}
+#botonProductos{
+	background:rgb(229, 229, 229);
+	color:black;
+	text-decoration: none;
+	padding:6px;
+	margin:20px;
+}
+#add{
+ height:5vh;
+}
