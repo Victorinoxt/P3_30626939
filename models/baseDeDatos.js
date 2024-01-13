@@ -29,8 +29,6 @@ db.serialize(() => {
 
 
 
-
-
   //------------------------------------------------------------------
   // Crear la tabla "Productos" si no existe
   db.run(`
@@ -478,6 +476,12 @@ function webK(req,res){
 
 
 
+async function logout{
+  res.clearCookie("jwt");
+  return res.redirect("/logincliente");
+}
+
+
 //_-------------------------------------------------
 module.exports = {
   aggDato,
@@ -500,5 +504,6 @@ module.exports = {
   filter,
   clientsview,
   webK,
-  addIMG
+  addIMG,
+  logout
 }
