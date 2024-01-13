@@ -6,6 +6,8 @@ const app = express();
 const path = require('path');
 const baseDatosModels = require('./models/baseDeDatos.js');
 const {PASSWORD,ADMIN} = process.env;
+const jwt = require("jsonwebtoken");
+const cookieParser = require('cookie-parser');
 let login= false;
 //recursos que se van a cargar en el server 
 app.use(express.static(__dirname+'/static'));
@@ -17,6 +19,7 @@ app.set('views',path.join(__dirname,"./views"));//definimos la ruta del motor de
 app.use(express.urlencoded({extended:false}));//permite recuperar los valores publicados en un request
 port = app.listen(5000);
 console.log('Servidor corriendo exitosamente en el puerto 5000');
+app.use(cookieParser());
 
 
 
@@ -29,6 +32,64 @@ app.get('/',(req,res)=>{
 app.get('/login',(req,res)=>{
 res.render('iniciarSesion.ejs');
 });
+
+//Enrutamiento del lado del cliente
+app.get('/logincliente',(req,res) => {
+  res.render('login.ejs')
+})
+
+
+app.post('/loginCliente',(req,res) => {
+  baseDatosModels.loginCliente(req,res);
+})
+
+
+
+app.get('/registercliente',(req,res) => {
+  res.render('register.ejs')
+})
+
+app.post('/registercliente',async(req,res) => {
+  baseDatosModels.registerCliente(req,res);
+})
+
+
+
+
+
+
+
+
+
+
+
+app.get('/web',(req,res) => {
+  baseDatosModels.mostrarProductosCliente(req,res)
+})
+
+app.get('/webcart',(req,res) => {
+  res.render('webcart');
+})
+
+
+app.post('/webcart/:id',baseDatosModels.rutabloqueada, async(req,res) => {
+  baseDatosModels.webK(req,res)
+})
+
+app.post('/webcartpayment/:id',(req,res) => {
+  baseDatosModels.webCartPayment(req,res);
+})
+
+
+app.post('/filter',(req,res) => {
+  baseDatosModels.filter(req,res);
+})
+
+
+app.get('/cart/:id',(req,res) => {
+  baseDatosModels.Cart(req,res);
+})
+
 
 
 app.post('/login',(req,res)=>{
@@ -45,6 +106,11 @@ app.post('/login',(req,res)=>{
 
 });
   
+
+
+app.get('/clientsview',(req,res) => {
+  baseDatosModels.clientsview(req,res);
+})
 
 app.get('/add',(req,res)=>{
 res.render('add.ejs');
@@ -115,6 +181,14 @@ baseDatosModels.updateCateg(req,res);
 app.get('/*',(req,res)=>{
 res.render('notfound.ejs')
 });
+
 //-------------------------------------------------------
+
+
+
+
+
+
+
 
 //ejemplo para un commit
