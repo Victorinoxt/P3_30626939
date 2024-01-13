@@ -43,7 +43,9 @@ app.post('/loginCliente',(req,res) => {
   baseDatosModels.loginCliente(req,res);
 })
 
-
+app.get('/logout',(req,res) => {
+  baseDatosModels.logout(req,res)
+})
 
 app.get('/registercliente',(req,res) => {
   res.render('register.ejs')
