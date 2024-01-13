@@ -117,14 +117,15 @@ res.render('add.ejs');
 });
 
 //---------------------------------------------------------
-app.get('/addImagen',(req,res)=>{
-res.render('addImagen.ejs');
+app.get('/addImagen/:id',(req,res)=>{
+baseDatosModels.addIMG(req,res)
 });
 
 
-app.post('/addImagen',(req,res)=>{
+app.post('/addImagen/:id',(req,res)=>{
 baseDatosModels.aggIMG(req,res);
 });
+
 
 
 app.post('/addPost',(req,res)=>{   
@@ -146,6 +147,7 @@ baseDatosModels.mostrarUpdate(req,res);
 app.post('/update/:id', (req, res) => {
  baseDatosModels.update(req,res);
 });
+
 //-------------------------------------------------------
 // GET /eliminar/:id
 app.get('/delete/:id', (req, res) => {

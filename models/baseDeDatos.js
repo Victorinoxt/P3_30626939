@@ -221,17 +221,26 @@ function deletee(req, res) {
 //_-------------------------------------------------
 function aggIMG(req, res) {
   const { destacado, img } = req.body;
-
-  const sql = `INSERT INTO imagenes(producto_id,url,destacado) 
-    VALUES (?,?,?)`;
-  db.get(`SELECT * FROM productos`, (err, row) => {
-    db.run(sql, [row.id,img, destacado], err => {
+  const { id } = req.params;
+  const sql = `UPDATE imagenes SET producto_id = ?, url = ?, destacado = ? WHERE id = ? `;
+    db.run(sql, [id,img,destacado,id], err => {
       if (err) return console.error(err.message);
       console.log('URL de imagen Insertada Correctamente');
       res.redirect('/productos');
     });
+}
+
+
+function addIMG(req,res) {
+  const { id } = req.params;
+  db.get(`SELECT * FROM productos WHERE id = ?`,[id],(err,row)=>{
+    res.render('addImagen.ejs',{
+      modelo:row
+    })
   })
 }
+
+
 //----------------------------------------------------
 
 function getCategorias(req, res) {
@@ -491,5 +500,6 @@ module.exports = {
   webCartPayment,
   filter,
   clientsview,
-  webK
+  webK,
+  addIMG
 }
