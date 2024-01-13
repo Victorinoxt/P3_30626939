@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 // Crear la base de datos
 const dbname = path.join(__dirname, '../db', 'base.db');
