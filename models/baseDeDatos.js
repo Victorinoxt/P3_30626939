@@ -476,7 +476,7 @@ function webK(req,res){
 
 
 
-async function logout{
+async function logout(req,res){
   res.clearCookie("jwt");
   return res.redirect("/logincliente");
 }
