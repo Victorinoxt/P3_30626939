@@ -156,7 +156,7 @@ function mostrarProductos(req, res) {
 function mostrarUpdate(req, res) {
 
   const id = req.params.id;
-  const sql = `SELECT * FROM productos WHERE producto_id = ?`;
+  const sql = `SELECT * FROM productos WHERE id = ?`;
   db.get(sql, [id], (err, row) => {
     if (err) return console.error(err.message);
     res.render('update.ejs', { modelo: row });
@@ -169,7 +169,7 @@ function update(req, res) {
 
   const { nombre, codigo, precio, descripcion, calidad, cantidad } = req.body;
 
-  const sql = `UPDATE productos SET nombre = ?, codigo = ?, precio = ?, descripcion = ?, calidad = ?, cantidad = ? WHERE producto_id = ?`;
+  const sql = `UPDATE productos SET nombre = ?, codigo = ?, precio = ?, descripcion = ?, calidad = ?, cantidad = ? WHERE id = ?`;
 
   db.run(sql, [nombre, codigo, precio, descripcion, calidad, cantidad, id], err => {
     if (err) return console.error(err.message);
@@ -181,7 +181,7 @@ function update(req, res) {
 
 function mostrarDelete(req, res) {
   const id = req.params.id;
-  const sql = `SELECT * FROM productos WHERE producto_id = ?`;
+  const sql = `SELECT * FROM productos WHERE id = ?`;
   db.get(sql, [id], (err, row) => {
     if (err) {
       res.status(500).send({ error: err.message });
@@ -207,7 +207,7 @@ function deletee(req, res) {
   const id = req.params.id;
   console.log('Consulta Eliminar');
   const sql = `
-    DELETE FROM productos WHERE producto_id = ?
+    DELETE FROM productos WHERE id = ?
   `;
   db.run(sql, [id], err => {
     if (err) {
