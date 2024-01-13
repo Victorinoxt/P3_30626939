@@ -445,7 +445,6 @@ async function webCartPayment(req, res) {
     if (data.success == true) {
       const tokenAuthorized = await promisify(jwt.verify)(req.cookies.jwt, 'token');
       const cliente_id = tokenAuthorized.id;
-
       db.run(`INSERT INTO ventas(cliente_id,producto_id,cantidad,total_pagado,fecha,ip_cliente) VALUES(?,?,?,?,?,?)`, [cliente_id, id, cantidad, total, fechaC, ipClient], (err, row) => {
         if (err) {
           console.log(err)
