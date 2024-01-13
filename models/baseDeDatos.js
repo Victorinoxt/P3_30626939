@@ -68,7 +68,7 @@ db.serialize(() => {
 
   db.run(`
   CREATE TABLE IF NOT EXISTS ventas (
-    cliente_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cliente_id TEXT NOT NULL,
     producto_id TEXT NOT NULL,
     cantidad INTEGER NOT NULL,
     total_pagado INTEGER NOT NULL,
