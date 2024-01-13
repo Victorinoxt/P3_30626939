@@ -294,7 +294,7 @@ async function registerCliente(req, res) {
     method: 'POST',
   });
   const Captcha = await response.json();
-  if (Captcha.success) {
+  if (Captcha.success == true) {
     db.get(`SELECT * FROM cliente WHERE email = ?`, [email], (err, row) => {
       if (row) {
         res.redirect('/registerclient')
@@ -303,7 +303,7 @@ async function registerCliente(req, res) {
           if (err) {
             console.log(err)
           } else {
-            res.redirect('/logincliente')
+            res.redirect('/logincliente');
           }
         })
       }
