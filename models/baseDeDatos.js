@@ -166,12 +166,11 @@ function mostrarUpdate(req, res) {
 
 function update(req, res) {
   const id = req.params.id;
-
   const { nombre, codigo, precio, descripcion, calidad, cantidad } = req.body;
 
   const sql = `UPDATE productos SET nombre = ?, codigo = ?, precio = ?, descripcion = ?, calidad = ?, cantidad = ? WHERE id = ?`;
 
-  db.run(sql, [nombre, codigo, precio, descripcion, calidad, cantidad, id], err => {
+  db.run(sql, [nombre, codigo, precio, descripcion, calidad, cantidad], err => {
     if (err) return console.error(err.message);
     console.log(`producto actualizado = Producto : ${id}`);
     res.redirect('/productos');
@@ -460,7 +459,7 @@ function webK(req,res){
     db.get(`SELECT * FROM imagenes WHERE producto_id = ?`, id, (err, img) => {
       res.render('webcart', {
         product: product,
-        image: img,
+        images: img,
         cant: cantidad,
         total: total
       })
