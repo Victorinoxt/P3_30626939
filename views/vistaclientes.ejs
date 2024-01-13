@@ -22,6 +22,8 @@
                     <th scope="col">Producto comprado</th>
                     <th scope="col">Monto pagado</th>
                     <th scope="col">Descripción</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">IP</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,6 +47,12 @@
                         </td>
                         <td>
                             <%=product[i].descripcion %>
+                        </td>
+                        <td>
+                            <%=product[i].fecha %>
+                        </td>
+                        <td>
+                            <%=product[i].ip_cliente %>
                         </td>
                     </tr>
             </tbody>

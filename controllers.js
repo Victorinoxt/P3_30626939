@@ -43,12 +43,10 @@ app.post('/loginCliente',(req,res) => {
   baseDatosModels.loginCliente(req,res);
 })
 
-app.get('/logout',async(req,res) => {
-  baseDatosModels.logout(req,res);
-})
+
 
 app.get('/registercliente',(req,res) => {
-  res.render('register.ejs')
+  res.render('register.ejs');
 })
 
 app.post('/registercliente',async(req,res) => {
@@ -56,6 +54,9 @@ app.post('/registercliente',async(req,res) => {
 })
 
 
+app.get('/logout',(req,res) => {
+  baseDatosModels.logout(req,res);
+})
 
 
 
@@ -153,13 +154,11 @@ app.post('/update/:id', (req, res) => {
 //-------------------------------------------------------
 // GET /eliminar/:id
 app.get('/delete/:id', (req, res) => {
- baseDatosModels.mostrarDelete(req,res);
+baseDatosModels.deletee(req,res);
 });
 //-------------------------------------------------------
 // POST /eliminar/:id
-app.post('/delete/:id', (req, res) => {
- baseDatosModels.deletee(req,res);
-});
+
 //------------------------------------------------------
 app.get('/categorias', (req, res) => {
  baseDatosModels.getCategorias(req,res);
@@ -187,7 +186,6 @@ res.render('notfound.ejs')
 });
 
 //-------------------------------------------------------
-
 
 
 

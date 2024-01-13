@@ -29,6 +29,8 @@ db.serialize(() => {
 
 
 
+
+
   //------------------------------------------------------------------
   // Crear la tabla "Productos" si no existe
   db.run(`
@@ -165,17 +167,13 @@ function mostrarUpdate(req, res) {
 function update(req, res) {
   const id = req.params.id;
   const { nombre, codigo, precio, descripcion, calidad, cantidad } = req.body;
-
   const sql = `UPDATE productos SET nombre = ?, codigo = ?, precio = ?, descripcion = ?, calidad = ?, cantidad = ? WHERE id = ?`;
-
-  db.run(sql, [nombre, codigo, precio, descripcion, calidad, cantidad,id], err => {
+  db.run(sql, [nombre, codigo, precio, descripcion, calidad, cantidad, id], err => {
     if (err) return console.error(err.message);
     console.log(`producto actualizado = Producto : ${id}`);
     res.redirect('/productos');
   });
-
 }
-
 function mostrarDelete(req, res) {
   const id = req.params.id;
   const sql = `SELECT * FROM productos WHERE id = ?`;
@@ -212,13 +210,13 @@ function deletee(req, res) {
       res.status(500).send({ error: err.message });
       return console.error(err.message);
     }
-    db.run(sql_img,[id],err => ){
-      if(err){
+    db.run(sql_img, [id], err => {
+      if (err) {
         console.log(err)
       }
       res.redirect('/productos')
     }
-  });
+  )});
 }
 
 //_-------------------------------------------------
@@ -226,19 +224,19 @@ function aggIMG(req, res) {
   const { destacado, img } = req.body;
   const { id } = req.params;
   const sql = `UPDATE imagenes SET producto_id = ?, url = ?, destacado = ? WHERE id = ? `;
-    db.run(sql, [id,img,destacado,id], err => {
-      if (err) return console.error(err.message);
-      console.log('URL de imagen Insertada Correctamente');
-      res.redirect('/productos');
-    });
+  db.run(sql, [id, img, destacado, id], err => {
+    if (err) return console.error(err.message);
+    console.log('URL de imagen Insertada Correctamente');
+    res.redirect('/productos');
+  });
 }
 
 
-function addIMG(req,res) {
+function addIMG(req, res) {
   const { id } = req.params;
-  db.get(`SELECT * FROM productos WHERE id = ?`,[id],(err,row)=>{
-    res.render('addImagen.ejs',{
-      modelo:row
+  db.get(`SELECT * FROM productos WHERE id = ?`, [id], (err, row) => {
+    res.render('addImagen.ejs', {
+      modelo: row
     })
   })
 }
@@ -340,7 +338,7 @@ async function loginCliente(req, res) {
     }
     else {
       console.log('Datos incorrectos');
-      res.redirect('/clientWebLogin');
+      res.redirect('/logincliente');
     }
   })
 
@@ -392,7 +390,7 @@ function filter(req, res) {
 }
 
 function clientsview(req, res) {
-  db.all(`SELECT productos.*, cliente.*, ventas.total_pagado, ventas.cantidad FROM productos JOIN ventas ON productos.id = ventas.producto_id JOIN cliente ON cliente.id = ventas.cliente_id;`, (err, query) => {
+  db.all(`SELECT productos.*, cliente.*, ventas.*, ventas.cantidad FROM productos JOIN ventas ON productos.id = ventas.producto_id JOIN cliente ON cliente.id = ventas.cliente_id;`, (err, query) => {
     if (err) {
       console.log(err)
     } else {
@@ -415,6 +413,11 @@ function Cart(req, res) {
   })
 }
 
+
+async function logout(req,res){
+  res.clearCookie("jwt");
+  res.redirect('/logincliente');
+}
 
 
 
@@ -462,9 +465,9 @@ async function webCartPayment(req, res) {
   }
 }
 
-function webK(req,res){
+function webK(req, res) {
   const { id } = req.params;
-  const { cantidad,precio } = req.body;
+  const { cantidad, precio } = req.body;
   const total = cantidad * precio
   db.get(`SELECT * FROM productos WHERE id = ?`, [id], (err, product) => {
     db.get(`SELECT * FROM imagenes WHERE producto_id = ?`, id, (err, img) => {
@@ -479,12 +482,6 @@ function webK(req,res){
   })
 }
 
-
-
-async function logout(req,res){
-  res.clearCookie("jwt");
-  return res.redirect("/logincliente");
-}
 
 
 //_-------------------------------------------------
