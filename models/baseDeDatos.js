@@ -168,7 +168,7 @@ function update(req, res) {
 
   const sql = `UPDATE productos SET nombre = ?, codigo = ?, precio = ?, descripcion = ?, calidad = ?, cantidad = ? WHERE id = ?`;
 
-  db.run(sql, [nombre, codigo, precio, descripcion, calidad, cantidad], err => {
+  db.run(sql, [nombre, codigo, precio, descripcion, calidad, cantidad,id], err => {
     if (err) return console.error(err.message);
     console.log(`producto actualizado = Producto : ${id}`);
     res.redirect('/productos');
@@ -206,13 +206,18 @@ function deletee(req, res) {
   const sql = `
     DELETE FROM productos WHERE id = ?
   `;
+  const sql_img = `DELETE FROM imagenes WHERE producto_id = ?`
   db.run(sql, [id], err => {
     if (err) {
       res.status(500).send({ error: err.message });
       return console.error(err.message);
     }
-    console.log('Producto eliminado');
-    res.redirect('/productos');
+    db.run(sql_img,[id],err => ){
+      if(err){
+        console.log(err)
+      }
+      res.redirect('/productos')
+    }
   });
 }
 
